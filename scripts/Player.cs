@@ -9,6 +9,9 @@ public partial class Player : CharacterBody2D
     [Export] public float RunMultiplier = 1.5f;
     [Export] public float Acceleration = 600f;
     [Export] public float Friction = 800f;
+    [Export] public float ToughTerrainMultiplier = .6f;
+    [Export] public TileMapLayer Shallow;
+    [Export] public TileMapLayer Ground;
 
     // ---- State ----
     public Vector2 Facing { get; private set; } = Vector2.Down;
@@ -22,7 +25,6 @@ public partial class Player : CharacterBody2D
     {
         _sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         _rayCast = GetNode<RayCast2D>("RayCast2D");
-
         // Layers are set here, not in the Inspector. The Inspector checkboxes are ignored in Godot.
         CollisionLayer = Layers.Bits(Layers.Player);
         CollisionMask = Layers.Bits(Layers.World);
@@ -33,13 +35,22 @@ public partial class Player : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         Vector2 input = Input.GetVector(Actions.MoveLeft, Actions.MoveRight, Actions.MoveUp, Actions.MoveDown);
-        Intereact();
+        Interact();
         UpdateFacing(input);
         Move(input, (float)delta);
         UpdateAnimation();
     }
 
-    private void Intereact()
+    private bool IsToughTerrain()
+    {
+        Vector2I shallowCell = Shallow.LocalToMap(Shallow.ToLocal(GlobalPosition));
+        TileData shallowData = Shallow.GetCellTileData(shallowCell);
+        string shallowType = shallowData?.GetCustomData("ground_type").AsString() ?? string.Empty;
+
+        return shallowType == "water";
+    }
+
+    private void Interact()
     {
         _rayCast.TargetPosition = Facing * 12;
 
@@ -62,10 +73,10 @@ public partial class Player : CharacterBody2D
         bool isRunning = Input.IsActionPressed(Actions.Run);
         _currentSpeed = isRunning ? WalkSpeed * RunMultiplier : WalkSpeed;
 
-        Vector2 target = input * _currentSpeed;
-        float rate = input == Vector2.Zero ? Friction : Acceleration;
+        Vector2 maxSpeed = IsToughTerrain() ? input * _currentSpeed * ToughTerrainMultiplier : input * _currentSpeed;
+        float speedChangePerSecond = input == Vector2.Zero ? Friction : Acceleration;
 
-        Velocity = Velocity.MoveToward(target, rate * delta);
+        Velocity = Velocity.MoveToward(maxSpeed, speedChangePerSecond * delta);
         MoveAndSlide();
     }
 
