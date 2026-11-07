@@ -4,20 +4,30 @@ using System;
 public partial class Sign : StaticBody2D
 {
 	[Export] public string Text { get; set; } = String.Empty;
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+    private Label _label;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    public override void _Ready()
+    {
+        // The sign itself: solid (world) and readable (interactable)
+        CollisionLayer = Layers.Bits(Layers.World, Layers.Interactable);
+
+        _label = GetNode<Label>("Label");
+        _label.Visible = false;
+
+        // The circle around the sign: isn't anything, only watches for the player
+        Area2D area = GetNode<Area2D>("Area2D");
+        area.CollisionLayer = 0;
+        area.CollisionMask = Layers.Bits(Layers.Player);
+        area.BodyExited += OnBodyExited;
+    }
 
     public void Read()
     {
-        Label label = GetNode<Label>("Label");
-		label.Text = Text;
-        label.Visible = true;
+        _label.Text = Text;
+        _label.Visible = true;
+    }
+    private void OnBodyExited(Node2D body)
+    {
+        _label.Visible = false;
     }
 }

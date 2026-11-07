@@ -22,6 +22,12 @@ public partial class Player : CharacterBody2D
     {
         _sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         _rayCast = GetNode<RayCast2D>("RayCast2D");
+
+        // Layers are set here, not in the Inspector. The Inspector checkboxes are ignored in Godot.
+        CollisionLayer = Layers.Bits(Layers.Player);
+        CollisionMask = Layers.Bits(Layers.World);
+        _rayCast.CollisionMask = Layers.Bits(Layers.Interactable);
+
     }
 
     public override void _PhysicsProcess(double delta)
@@ -86,24 +92,4 @@ public partial class Player : CharacterBody2D
         if (facing == Vector2.Down) return MagicStrings.Down;
         return MagicStrings.Side;
     }
-}
-
-public static class Actions
-{
-    public const string MoveUp = "move_up";
-    public const string MoveDown = "move_down";
-    public const string MoveLeft = "move_left";
-    public const string MoveRight = "move_right";
-    public const string Attack = "attack";
-    public const string Interact = "interact";
-    public const string Run = "run";
-}
-
-public static class MagicStrings
-{
-    public const string Player = "Player";
-    public const string Sign = "Sign";
-    public const string Up = "up";
-    public const string Down = "down";
-    public const string Side = "side";
 }
