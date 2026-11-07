@@ -29,7 +29,6 @@ public partial class Player : CharacterBody2D
         CollisionLayer = Layers.Bits(Layers.Player);
         CollisionMask = Layers.Bits(Layers.World);
         _rayCast.CollisionMask = Layers.Bits(Layers.Interactable);
-
     }
 
     public override void _PhysicsProcess(double delta)
