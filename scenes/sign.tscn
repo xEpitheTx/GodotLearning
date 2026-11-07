@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dfwvpu4f8m0c4"]
+
+[ext_resource type="Script" uid="uid://bihx44jd888fg" path="res://scripts/Sign.cs" id="1_kd50q"]
+[ext_resource type="Texture2D" uid="uid://bk15504q4whyj" path="res://art/Ninja Adventure - Asset Pack/Backgrounds/Tilesets/TilesetElement.png" id="1_shbub"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ye1u"]
+size = Vector2(13, 11)
+
+[node name="Sign" type="StaticBody2D" unique_id=757153378]
+collision_layer = 33
+script = ExtResource("1_kd50q")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1589006940]
+texture = ExtResource("1_shbub")
+region_enabled = true
+region_rect = Rect2(0, 32, 16, 16)
+
+[node name="Label" type="Label" parent="." unique_id=2003016833]
+visible = false
+offset_left = -20.0
+offset_top = -31.0
+offset_right = 20.0
+offset_bottom = -8.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2079020427]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_2ye1u")

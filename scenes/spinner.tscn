@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bwpmh08jgfvj4"]
+
+[ext_resource type="Script" uid="uid://ca14kw432bykg" path="res://scripts/Spinner.cs" id="1_78gc6"]
+[ext_resource type="Texture2D" uid="uid://buk76s7i4hfq2" path="res://icon.svg" id="1_i3bsr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ye1u"]
+size = Vector2(161, 146)
+
+[node name="Spinner" type="Node2D" unique_id=359105495]
+position = Vector2(131, 106)
+script = ExtResource("1_78gc6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1436059200]
+texture = ExtResource("1_i3bsr")
+
+[node name="Node2D" type="Node2D" parent="Sprite2D" unique_id=228694778]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D" unique_id=2124828876]
+position = Vector2(2, 1)
+shape = SubResource("RectangleShape2D_2ye1u")
+
+[node name="Timer" type="Timer" parent="." unique_id=2048919013]
+wait_time = 2.0
+autostart = true

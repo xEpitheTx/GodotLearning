@@ -1,0 +1,8 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Visual Studio / build output
+.vs/
+bin/
+obj/

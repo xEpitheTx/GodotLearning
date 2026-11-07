@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b8sqqaphb0rk1"]
+
+[ext_resource type="PackedScene" uid="uid://ciqytm3sci6fm" path="res://scenes/player.tscn" id="1_im37l"]
+[ext_resource type="PackedScene" uid="uid://dfwvpu4f8m0c4" path="res://scenes/sign.tscn" id="2_4adyp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ye1u"]
+size = Vector2(248, 47.5)
+
+[node name="TestRoom" type="Node2D" unique_id=1805094094]
+
+[node name="Player" parent="." unique_id=657325882 instance=ExtResource("1_im37l")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2003673673]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=130815999]
+position = Vector2(128, 170.75)
+shape = SubResource("RectangleShape2D_2ye1u")
+
+[node name="Sign" parent="." unique_id=1851392395 instance=ExtResource("2_4adyp")]
+position = Vector2(155, 76)
+Text = "Hello World"

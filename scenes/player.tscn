@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ciqytm3sci6fm"]
+
+[ext_resource type="Script" uid="uid://bksoqinybtify" path="res://scripts/Player.cs" id="1_g2els"]
+[ext_resource type="SpriteFrames" uid="uid://c5gr15wktn1xk" path="res://resources/wren_frames.tres" id="2_g2els"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ye1u"]
+size = Vector2(12.5, 2)
+
+[node name="Player" type="CharacterBody2D" unique_id=657325882]
+script = ExtResource("1_g2els")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=39372202]
+unique_name_in_owner = true
+position = Vector2(0, -8)
+sprite_frames = ExtResource("2_g2els")
+animation = &"walk_side"
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="." unique_id=1605850295]
+shape = SubResource("RectangleShape2D_2ye1u")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=789321353]
+collision_mask = 32

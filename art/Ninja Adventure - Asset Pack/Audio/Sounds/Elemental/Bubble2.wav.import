@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://46v311h3er5g"
+path="res://.godot/imported/Bubble2.wav-a97fc49d9883edf9f217552cebfe15bb.sample"
+
+[deps]
+
+source_file="res://art/Ninja Adventure - Asset Pack/Audio/Sounds/Elemental/Bubble2.wav"
+dest_files=["res://.godot/imported/Bubble2.wav-a97fc49d9883edf9f217552cebfe15bb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

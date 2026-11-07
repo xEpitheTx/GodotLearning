@@ -1,0 +1,165 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c5gr15wktn1xk"]
+
+[ext_resource type="Texture2D" uid="uid://bb38vtcup1tlf" path="res://art/Ninja Adventure - Asset Pack/Actor/Character/Boy/SpriteSheet.png" id="1_sheet"]
+
+[sub_resource type="AtlasTexture" id="down_4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="side_4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(48, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="up_4"]
+atlas = ExtResource("1_sheet")
+region = Rect2(16, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="down_0"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="side_0"]
+atlas = ExtResource("1_sheet")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="up_0"]
+atlas = ExtResource("1_sheet")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="down_1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="down_2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="down_3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="side_1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="side_2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="side_3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="up_1"]
+atlas = ExtResource("1_sheet")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="up_2"]
+atlas = ExtResource("1_sheet")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="up_3"]
+atlas = ExtResource("1_sheet")
+region = Rect2(16, 48, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("down_4")
+}],
+"loop": 0,
+"name": &"attack_down",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("side_4")
+}],
+"loop": 0,
+"name": &"attack_side",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("up_4")
+}],
+"loop": 0,
+"name": &"attack_up",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("down_0")
+}],
+"loop": 1,
+"name": &"idle_down",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("side_0")
+}],
+"loop": 1,
+"name": &"idle_side",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("up_0")
+}],
+"loop": 1,
+"name": &"idle_up",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("down_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("down_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("down_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("down_3")
+}],
+"loop": 1,
+"name": &"walk_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("side_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("side_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("side_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("side_3")
+}],
+"loop": 1,
+"name": &"walk_side",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("up_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("up_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("up_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("up_3")
+}],
+"loop": 1,
+"name": &"walk_up",
+"speed": 8.0
+}]
