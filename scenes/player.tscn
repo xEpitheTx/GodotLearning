@@ -2,9 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bksoqinybtify" path="res://scripts/Player.cs" id="1_g2els"]
 [ext_resource type="SpriteFrames" uid="uid://c5gr15wktn1xk" path="res://resources/wren_frames.tres" id="2_g2els"]
+[ext_resource type="Script" uid="uid://dygnhfcmtg8u1" path="res://scripts/Hitbox.cs" id="3_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://c13ag0guev8mh" path="res://art/Ninja Adventure - Asset Pack/Items/Weapons/Sword/SpriteInHand.png" id="4_dqkch"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ye1u"]
 size = Vector2(12.5, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3s1c"]
+size = Vector2(13, 5)
 
 [node name="Player" type="CharacterBody2D" unique_id=657325882]
 script = ExtResource("1_g2els")
@@ -13,7 +18,7 @@ script = ExtResource("1_g2els")
 unique_name_in_owner = true
 position = Vector2(0, -8)
 sprite_frames = ExtResource("2_g2els")
-animation = &"walk_side"
+animation = &"attack_down"
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="." unique_id=1605850295]
 shape = SubResource("RectangleShape2D_2ye1u")
@@ -22,3 +27,20 @@ shape = SubResource("RectangleShape2D_2ye1u")
 collision_mask = 32
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1243376937]
+
+[node name="SwordPivot" type="Node2D" parent="." unique_id=433736367]
+
+[node name="SwordHitBox" type="Area2D" parent="SwordPivot" unique_id=1964006512]
+script = ExtResource("3_qhqgy")
+metadata/_custom_type_script = "uid://dygnhfcmtg8u1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordPivot/SwordHitBox" unique_id=518920710]
+position = Vector2(9.5, 0.5)
+shape = SubResource("RectangleShape2D_l3s1c")
+disabled = true
+
+[node name="SwordSprite" type="Sprite2D" parent="SwordPivot" unique_id=261206185]
+visible = false
+position = Vector2(10, 0)
+rotation = -1.5707964
+texture = ExtResource("4_dqkch")

@@ -1,6 +1,8 @@
 using Godot;
 using System.Reflection;
+using System.Threading.Tasks;
 using static Godot.TextServer;
+using static Godot.WebSocketPeer;
 
 public partial class Player : CharacterBody2D
 {
@@ -10,34 +12,90 @@ public partial class Player : CharacterBody2D
     [Export] public float Acceleration = 600f;
     [Export] public float Friction = 800f;
     [Export] public float ToughTerrainMultiplier = .6f;
+    [Export] public float AttackDuration = 0.25f;
+
     [Export] public TileMapLayer Shallow;
     [Export] public TileMapLayer Ground;
 
     // ---- State ----
     public Vector2 Facing { get; private set; } = Vector2.Down;
     private float _currentSpeed;
+    private enum State { Move, Attack };
+    private State _state = State.Move;
 
     // ---- Nodes ----
     private AnimatedSprite2D _sprite;
     private RayCast2D _rayCast;
+    private Node2D _swordDirection;
+    private CollisionShape2D _swordCollision;
+    private Sprite2D _swordSprite;
 
     public override void _Ready()
     {
-        _sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-        _rayCast = GetNode<RayCast2D>("RayCast2D");
+        InitializeNodes();
         // Layers are set here, not in the Inspector. The Inspector checkboxes are ignored in Godot.
         CollisionLayer = Layers.Bits(Layers.Player);
         CollisionMask = Layers.Bits(Layers.World);
         _rayCast.CollisionMask = Layers.Bits(Layers.Interactable);
     }
 
+    private void InitializeNodes()
+    {
+        _sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        _rayCast = GetNode<RayCast2D>("RayCast2D");
+        _swordDirection = GetNode<Node2D>("SwordPivot");
+        _swordCollision = GetNode<CollisionShape2D>("SwordPivot/SwordHitBox/CollisionShape2D");
+        _swordSprite = GetNode<Sprite2D>("SwordPivot/SwordSprite");
+    }
+
     public override void _PhysicsProcess(double delta)
     {
-        Vector2 input = Input.GetVector(Actions.MoveLeft, Actions.MoveRight, Actions.MoveUp, Actions.MoveDown);
+        switch (_state)
+        {
+            case State.Move:
+                MoveState(delta);
+                break;
+            case State.Attack:
+                AttackState(delta);
+                break;
+            default:
+                break;
+        }
         Interact();
+    }
+
+    private void MoveState(double delta)
+    {
+        Vector2 input = Input.GetVector(Actions.MoveLeft, Actions.MoveRight, Actions.MoveUp, Actions.MoveDown);
         UpdateFacing(input);
         Move(input, (float)delta);
         UpdateAnimation();
+
+        if (Input.IsActionJustPressed(Actions.Attack))
+        {
+            using var _ = StartAttackAsync();
+        }
+    }
+
+    private void AttackState(double delta)
+    {
+        Velocity = Vector2.Zero;
+    }
+
+    private async Task StartAttackAsync()
+    {
+        _state = State.Attack;
+        _swordDirection.Rotation = Facing.Angle();
+        _swordCollision.Disabled = false;
+        _swordSprite.Visible = true;
+        SetSpriteDirection("attack");
+
+        SignalAwaiter swingFinished = ToSignal(GetTree().CreateTimer(AttackDuration), SceneTreeTimer.SignalName.Timeout);
+        await swingFinished;
+
+        _swordSprite.Visible = false;
+        _swordCollision.Disabled = true;
+        _state = State.Move;
     }
 
     private bool IsToughTerrain()
@@ -82,9 +140,14 @@ public partial class Player : CharacterBody2D
     private void UpdateAnimation()
     {
         string state = Velocity == Vector2.Zero ? "idle" : "walk";
+        SetSpriteDirection(state);
+        _sprite.SpeedScale = _currentSpeed / WalkSpeed;
+    }
+
+    private void SetSpriteDirection(string state)
+    {
         _sprite.Play($"{state}_{DirectionName(Facing)}");
         _sprite.FlipH = Facing == Vector2.Left;
-        _sprite.SpeedScale = _currentSpeed / WalkSpeed;
     }
 
     // ---- Helpers ----
